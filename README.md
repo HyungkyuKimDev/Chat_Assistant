@@ -1,14 +1,10 @@
 # Chat Assistant
 
-------
-
 <b>A Chat Assistant</b> for senior. Using <b>Python, Naver Clova and ChatGPT 3.5</b>  
 It can understand what you say on Mic. And answer like a human on Speaker.   
 It can be your friend. And If you want to change ChatGPT's prompt, then you can make other Chat Assistant easily.
 
 ## Features
-
------
 
 1. <b>Wake Chat Assistant</b> : If you call "Robot" within 2 secs, then It works using.
 2. <b>Talk Something</b> : Say anything on Mic within 3 secs, The Chat Assistant understand what you said.
@@ -16,7 +12,6 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
 
 ## Setup
 
----
 - Clone <b>this Repository</b> on your PC.
     > git clone https://github.com/HyungkyuKimDev/Chat_Assistant.git
 - Install <b>requirements.txt</b> file on your Terminal.
@@ -25,7 +20,6 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
 
 ## Usage
 
----
 
 - change Directory to The directory where you clone This Repository.
     > cd [The dircetory where you clone]
