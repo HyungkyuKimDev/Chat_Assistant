@@ -63,7 +63,7 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
 ## Code
 
 ### Recording voice.    
-    ```python
+```python
         def mic(time):
             import requests
             import sounddevice as sd
@@ -98,7 +98,7 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
             response = requests.post(url, data=data_voice, headers=headers)
 
             return response
-    ```
+```
 <br></br>
 ### Use Speaker
 ```python
