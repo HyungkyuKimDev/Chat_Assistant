@@ -99,6 +99,7 @@ def mic(time):
 
     return response
 ```
+- Reference : [Naver Cloud : CLOVA Speech Recognition](https://api.ncloud-docs.com/docs/ai-naver-clovaspeechrecognition)
 <br></br>
 ### Use Speaker
 ```python
@@ -133,6 +134,8 @@ def speaking(anw_text):
         os.remove("ResultMP3.mp3")
         os.remove("test.wav")
 ```
+- Reference : [NAVER CLOVA : CLOVA Voice](https://api.ncloud-docs.com/docs/ai-naver-clovavoice-ttspremium)
+
 <br></br>
 ### Make an Answer Using OpenAI
 ```python
