@@ -62,42 +62,42 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
 
 ## Code
 
-### Recording voice.    
+### Recording voice.
 ```python
-        def mic(time):
-            import requests
-            import sounddevice as sd
-            from scipy.io.wavfile import write
+def mic(time):
+    import requests
+    import sounddevice as sd
+    from scipy.io.wavfile import write
 
-            # Recording Voice
-            fs = 44100
-            seconds = time # time for recording
+    # Recording Voice
+    fs = 44100
+    seconds = time # time for recording
     
-            myRecording = sd.rec(int(seconds * fs), samplerate=fs, channels=4)  # channels는 마이크 장치 번호
-            print("recording start")
-            # Find mic channel => python -m sounddevice
-            sd.wait()
-            write('sampleWav.wav', fs, myRecording)
+    myRecording = sd.rec(int(seconds * fs), samplerate=fs, channels=4)  # channels는 마이크 장치 번호
+    print("recording start")
+    # Find mic channel => python -m sounddevice
+    sd.wait()
+    write('sampleWav.wav', fs, myRecording)
 
-            # Voice To Text Using Naver Cloud : CLOVA Speech Recognition
-            ## Set
-            lang = "Eng"
-            url = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + lang
+    # Voice To Text Using Naver Cloud : CLOVA Speech Recognition
+    ## Set
+    lang = "Eng"
+    url = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + lang
     
-            ## Recorded Voice File
-            data_voice = open('sampleWav.wav', 'rb')
+    ## Recorded Voice File
+    data_voice = open('sampleWav.wav', 'rb')
 
-            ## headers
-            headers = {
-                "X-NCP-APIGW-API-KEY-ID": client_id,
-                "X-NCP-APIGW-API-KEY": client_secret,
-                "Content-Type": "application/octet-stream"
-            }
+    ## headers
+    headers = {
+        "X-NCP-APIGW-API-KEY-ID": client_id,
+        "X-NCP-APIGW-API-KEY": client_secret,
+        "Content-Type": "application/octet-stream"
+    }
 
-            ## VTT Output
-            response = requests.post(url, data=data_voice, headers=headers)
+    ## VTT Output
+    response = requests.post(url, data=data_voice, headers=headers)
 
-            return response
+    return response
 ```
 <br></br>
 ### Use Speaker
