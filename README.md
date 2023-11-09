@@ -17,11 +17,20 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
 ## Setup
 
 ---
+- Clone <b>this Repository</b> on your PC.
+    > git clone https://github.com/HyungkyuKimDev/Chat_Assistant.git
+- Install <b>requirements.txt</b> file on your Terminal.
+    > pip install -r requirements.txt
 
 
 ## Usage
 
 ---
+
+- change Directory to The directory where you clone This Repository.
+    > cd [The dircetory where you clone]
+- execute <b>chatbot_voice.py</b> 
+    > python3 chatbot_voice.py
 
 
 ## Demo
