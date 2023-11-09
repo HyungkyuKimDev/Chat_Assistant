@@ -6,7 +6,7 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
 
 ## Features
 
-1. <b>Wake Chat Assistant</b> : If you call "Robot" within 2 secs, then It works using.
+1. <b>Wake Chat Assistant</b> : If you call "Hey" within 2 secs, then It works using.
     - Execute
         ```python
       robot = Robot()
@@ -36,6 +36,24 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
     ```
 3. <b>Make Answer properly</b> : It is going to make answer something using ChatGPT. And speak out using Speaker. 
 
+4. <b>Special Function</b>
+   - <b>Silent</b> : If you say "Silent", Then It doesn't speak for 1000000 secs until you speak first.
+   - <b>Reset</b> : If you say "Reset", Then It remove the user's data. And ask you about new user's data.
+   - <b>Turn off</b> : If you say "Turn off", Then It quit the process.
+
+    ```python
+    if response == "reset":
+        speaking("ok. Reset mode")
+        name_ini()
+    elif response == "turn off":
+        speaking("ok. turn off mode")
+        break
+    elif response == "silent":
+        speaking("ok. silent mode")
+        call_num = - 1000000
+   ```
+    
+ 
 ## Setup
 
 - Clone <b>this Repository</b> on your PC. 
