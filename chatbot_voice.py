@@ -15,7 +15,7 @@ while 1:
     if call_num == 3:
         speaking("Please call me Robot!")
         call_num = 0
-    if response == "robot":
+    if response == "hey":
         speaking("yes sir!")
         response = mic(3)
 
@@ -31,10 +31,8 @@ while 1:
 
         while response != "":
             response_ = robot.gpt_send_anw(response)
-            emotion = response_[0]
-            ans = response_[1]
-
-            speaking(ans)
+            speaking(response_)
+            response = mic(3)
         os.remove("sampleWav.wav")
 
         response = mic(3)
