@@ -27,6 +27,17 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
     > python3 chatbot_voice.py
 
 
+## Contact
+
+Hyungkyu Kim 
+- hyungkyukimdev@gmail.com
+- [Linkedein](https://www.linkedin.com/in/hyung-gyu-kim-202b991b8/)
+- [Blog](https://honoluulu-life.tistory.com/)
+
+Project Link: [HyungkyuKimDev/Chat_Assistant](HyungkyuKimDev/Chat_Assistant)
+
+
+
 ## Demo
 
 ---
