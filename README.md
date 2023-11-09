@@ -17,9 +17,9 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
             call_num += 1
             print(call_num)
         if call_num == 3:
-            speaking("Please call me Robot!")
+            speaking("Please call me hey!")
             call_num = 0
-        if response == "robot":
+        if response == "hey":
             speaking("yes sir!")
             response = mic(3)
         ```
