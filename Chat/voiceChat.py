@@ -88,7 +88,7 @@ def mic(time):
     fs = 44100
     seconds = time
 
-    myRecording = sd.rec(int(seconds * fs), samplerate=fs, channels=4)  # channels는 마이크 장치 번호
+    myRecording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)  # channels는 마이크 장치 번호
     print("recording start")
     # Find mic channel => python -m sounddevice
     sd.wait()
@@ -112,7 +112,26 @@ def mic(time):
     ## VTT Output
     response = requests.post(url, data=data_voice, headers=headers)
 
-    return response
+    result_man = str(response.text)
+    result = list(result_man)
+    count_down = 0
+    say_str = []
+
+    for i in range(0, len(result) - 2):
+        if count_down == 3:
+            say_str.append(result[i])
+
+        if response.text[i] == "\"":
+            if count_down == 3:
+                break
+            else:
+                count_down += 1
+
+    anw_str = ''.join(map(str, say_str))
+
+    print(anw_str)
+
+    return anw_str
 
 
 def name_check():

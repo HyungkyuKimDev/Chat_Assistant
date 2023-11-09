@@ -1,5 +1,6 @@
-from Chat.voiceChat import *
 import os
+
+from Chat.voiceChat import *
 
 call_num = 0
 while 1:
@@ -13,7 +14,7 @@ while 1:
         call_num += 1
         print(call_num)
     if call_num == 3:
-        speaking("Please call me Robot!")
+        speaking("Please call me hey!")
         call_num = 0
     if response == "hey":
         speaking("yes sir!")
@@ -22,7 +23,7 @@ while 1:
         if response == "reset":
             speaking("ok. Reset mode")
             name_ini()
-        elif response == "exit":
+        elif response == "turn off":
             speaking("ok. turn off mode")
             break
         elif response == "silent":
@@ -33,10 +34,12 @@ while 1:
             response_ = robot.gpt_send_anw(response)
             speaking(response_)
             response = mic(3)
-        os.remove("sampleWav.wav")
 
-        response = mic(3)
-
-        if response == "":
-            os.remove("sampleWav.wav")
-            break
+            if response == "":
+                break
+mp3_path = "./ResultMP3.mp3"
+sam_path = "./sampleWav.wav"
+test_path = "./test.wav"
+os.remove(mp3_path)
+os.remove(sam_path)
+os.remove(test_path)
