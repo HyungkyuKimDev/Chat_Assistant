@@ -17,7 +17,7 @@
 マイクで話したのをテキストで認識します。その後、答えを作りスピーカでその答えを出力します。
 これはあなたの友達になれますし、ChatGPTのPromptを変更すると。また、自分のChat　Botを作れます。
 
-## 특징
+## 特徴
 
 1. <b>Chat Assistantの策動</b> : ２秒以内で"hey"と言うと、作道が始まります。
     - 実行
@@ -67,7 +67,7 @@
    ```
     
  
-## 저장
+## 保存
 
 - <b>このrepository</b>をgit cloneしてください。
   ```sh
@@ -79,7 +79,7 @@
   ```
 
 
-## 사용법
+## 使い方
 
 
 - 位置をCloneしたところに移動してください。
@@ -149,7 +149,7 @@ def mic(time):
 
     return anw_str
 ```
-- Reference : [Naver Cloud : CLOVA Speech Recognition](https://api.ncloud-docs.com/docs/ai-naver-clovaspeechrecognition)
+- 参考 : [Naver Cloud : CLOVA Speech Recognition](https://api.ncloud-docs.com/docs/ai-naver-clovaspeechrecognition)
 <br></br>
 ### スピーカーを利用し、オーディオデータの出力
 ```python
@@ -184,7 +184,7 @@ def speaking(anw_text):
         os.remove("ResultMP3.mp3")
         os.remove("test.wav")
 ```
-- 참조 : [NAVER CLOVA : CLOVA Voice](https://api.ncloud-docs.com/docs/ai-naver-clovavoice-ttspremium)
+- 参考 : [NAVER CLOVA : CLOVA Voice](https://api.ncloud-docs.com/docs/ai-naver-clovavoice-ttspremium)
 
 <br></br>
 ### OpenAIを利用し,答えを作り

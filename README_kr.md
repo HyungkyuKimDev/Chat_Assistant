@@ -184,7 +184,7 @@ def speaking(anw_text):
         os.remove("ResultMP3.mp3")
         os.remove("test.wav")
 ```
-- 참조 : [NAVER CLOVA : CLOVA Voice](https://api.ncloud-docs.com/docs/ai-naver-clovavoice-ttspremium)
+- Reference : [NAVER CLOVA : CLOVA Voice](https://api.ncloud-docs.com/docs/ai-naver-clovavoice-ttspremium)
 
 <br></br>
 ### OpenAI 이용해, 대답 구하기
