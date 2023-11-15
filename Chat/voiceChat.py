@@ -247,9 +247,6 @@ def conversation_loop():
                 elif response == "turn off":
                     speaking("ok. turn off mode")
                     return False
-                elif response == "silent":
-                    speaking("ok. silent mode")
-                    call_num = - 1000000
                 elif response != "":
                     response = RB.gpt_send_anw(response)
 
