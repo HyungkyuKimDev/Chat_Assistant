@@ -7,6 +7,8 @@ from playsound import playsound as pl
 import requests
 import sounddevice as sd
 from scipy.io.wavfile import write
+import numpy as np
+from openwakeword.model import Model
 
 ## ChatGPT
 openai.api_key = API_KEY
@@ -187,3 +189,73 @@ def name_ini():
 
 def use_sound(loc):
     pl(loc)
+
+# Audio Configuration
+CHANNELS = 1
+RATE = 16000
+CHUNK = 120
+
+def conversation_loop():
+    print("Start conversation_loop()")
+    RB = Robot()
+
+    # Clean up before starting the loop
+    file_cleanup()
+
+    name_check()
+
+    stream = sd.InputStream(
+        samplerate=RATE, channels=CHANNELS, dtype='int16')
+    stream.start()
+
+    owwModel = Model(
+        wakeword_models=["../models/hey.tflite"], inference_framework="tflite")
+
+    n_models = len(owwModel.models.keys())
+
+    # Main loop for wake word detection
+    while True:
+        # Get audio
+        audio_data, overflowed = stream.read(CHUNK)
+        if overflowed:
+            print("Audio buffer has overflowed")
+
+        audio_data = np.frombuffer(audio_data, dtype=np.int16)
+
+        # Feed to openWakeWord model
+        prediction = owwModel.predict(audio_data)
+        common = False
+        # Process prediction results
+        for mdl in owwModel.prediction_buffer.keys():
+            scores = list(owwModel.prediction_buffer[mdl])
+            if scores[-1] > 0.2:  # Wake word detected
+                print(f"wake word dectected {mdl}!")
+                mdl = ""
+                scores = [0] * n_models
+                audio_data = np.array([])
+                common = True
+        if common:
+            speaking("yes sir!")
+            common = False
+
+            while True:
+                response = mic(3)
+
+                if response == "reset":
+                    speaking("ok. Reset mode")
+                    name_ini()
+                elif response == "turn off":
+                    speaking("ok. turn off mode")
+                    break
+                elif response == "silent":
+                    speaking("ok. silent mode")
+                    call_num = - 1000000
+                elif response != "":
+                    response = RB.gpt_send_anw(response)
+
+                    ans = response
+                    speaking(ans)
+                elif response == "":
+                    break
+
+            return True
