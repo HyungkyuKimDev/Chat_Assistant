@@ -232,8 +232,7 @@ Hyungkyu Kim
 
 Project Link: [HyungkyuKimDev/Chat_Assistant](HyungkyuKimDev/Chat_Assistant)
 
-
-
-## Demo
-
-[![Video Label](http://img.youtube.com/vi/3WTap8t_r6o/0.jpg)](https://youtu.be/3WTap8t_r6o)
+## Thanks to
+[Topasm](https://github.com/Topasm) 
+- Wake Word Part developed 
+- Robot Engineer
