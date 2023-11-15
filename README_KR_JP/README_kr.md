@@ -13,44 +13,26 @@
 
 # Chat Assistant
 
-노인을 위한 <b>A Chat Assistant</b>입니다. <b>Python, Naver Clova and ChatGPT 3.5</b>를 사용해 구현하였습니다. 
+노인을 위한 <b>A Chat Assistant</b>입니다. <b>Python, Wake Word, Naver Clova and ChatGPT 3.5</b>를 사용해 구현하였습니다. 
 마이크를 통해 말하신것을 텍스트로 인식합니다. 그런 다음 적절한 답을 만들어 스피커를 통해 출력합니다.  
 이것은 당신의 친구가 될 수 있으며, ChatGPT의 프롬포트를 변경하시면, 또 다른 본인만의 chat bot을 만들 수 있습니다. 
 
 ## 특징
 
-1. <b>Chat Assistant 작동</b> : 2초 이내에 "hey"라고 말하시면, 작동이 시작됩니다..
-    - 실행
-        ```python
-      robot = Robot()
+1. <b>Wake Chat Assistant</b> : "Hey"라고 말하면, 작동합니다.
 
-        # 대화 시작
-        response = mic(2)
-        if response == "":
-            call_num += 1
-            print(call_num)
-        if call_num == 3:
-            speaking("Please call me hey!")
-            call_num = 0
-        if response == "hey":
-            speaking("yes sir!")
-            response = mic(3)
-        ```
 2. <b>대답 하기</b> : 마이크를 통해 3초간 녹음을 하면, ChatGPT가 해당 음성을 텍스트로 인식합니다.
     - 실행
-   ```python
+   ``python
     while response != "":
-        response_ = robot.gpt_send_anw(response)
-        emotion = response_[0]
-        ans = response_[1]
+        response = robot.gpt_send_anw(response)
+        ans = response
 
         speaking(ans)
-    os.remove("sampleWav.wav")    
     ```
 3. <b>적절한 대답 생성</b> : ChatGPT를 이용해서 답을 구현합니다. 이후, 그 답을 스피커를 통해 출력합니다. 
 
 4. <b>특별한 기능</b>
-   - <b>방해 금지 기능</b> : "Silent",라고 말하면, 10000초 동안 말거는 기능을 작동하지 않습니다.
    - <b>초기화 기능</b> : "Reset"이라고 말하면, 유저 데이터를 삭제한 뒤, 유저 데이터를 다시 물어봅니다.
    - <b>종료 기능</b> : "Turn off"라고 말하면, 프로세스를 끝냅니다.
 
@@ -60,10 +42,7 @@
         name_ini()
     elif response == "turn off":
         speaking("ok. turn off mode")
-        break
-    elif response == "silent":
-        speaking("ok. silent mode")
-        call_num = - 1000000
+        return False
    ```
     
  
@@ -92,6 +71,45 @@
   ```
 
 ## Code
+
+### Wake Word
+```python
+stream = sd.InputStream(
+        samplerate=RATE, channels=CHANNELS, dtype='int16')
+    stream.start()
+
+    owwModel = Model(
+        wakeword_models=["../models/hey.tflite"], inference_framework="tflite")
+
+    n_models = len(owwModel.models.keys())
+
+    # Wake Word 확인을 위한 Main loop 
+    while True:
+        # audio 데이터 얻기
+        audio_data, overflowed = stream.read(CHUNK)
+        if overflowed:
+            print("Audio buffer has overflowed")
+
+        audio_data = np.frombuffer(audio_data, dtype=np.int16)
+
+        # Feed to openWakeWord model
+        prediction = owwModel.predict(audio_data)
+        common = False
+        # Process prediction results
+        for mdl in owwModel.prediction_buffer.keys():
+            scores = list(owwModel.prediction_buffer[mdl])
+            if scores[-1] > 0.2:  # Wake word 확인시
+                print(f"wake word dectected {mdl}!")
+                mdl = ""
+                scores = [0] * n_models
+                audio_data = np.array([])
+                common = True
+        if common:
+            speaking("yes sir!")
+```
+
+- Reference : [dscripka/openWakeWord](https://github.com/dscripka/openWakeWord)
+
 
 ### 음성 녹음
 ```python
@@ -232,8 +250,7 @@ class Robot():
 
 프로젝트 링크: [HyungkyuKimDev/Chat_Assistant](HyungkyuKimDev/Chat_Assistant)
 
-
-
-## 데모
-
-[![Video Label](http://img.youtube.com/vi/3WTap8t_r6o/0.jpg)](https://youtu.be/3WTap8t_r6o)
+## Thanks to
+[Topasm](https://github.com/Topasm) 
+- Wake Word 부분 개발
+- Robot Engineer

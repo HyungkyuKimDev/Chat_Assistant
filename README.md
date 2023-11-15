@@ -14,44 +14,27 @@
 
 # Chat Assistant
 
-<b>A Chat Assistant</b> for senior. Using <b>Python, Naver Clova and ChatGPT 3.5</b>  
+<b>A Chat Assistant</b> for senior. Using <b>Python, Naver Clova, Wake Word and ChatGPT 3.5</b>  
 It can understand what you say on Mic. And answer like a human on Speaker.   
 It can be your friend. And If you want to change ChatGPT's prompt, then you can make other Chat Assistant easily.
 
 ## Features
 
-1. <b>Wake Chat Assistant</b> : If you call "Hey" within 2 secs, then It works using.
-    - Execute
-        ```python
-      robot = Robot()
+1. <b>Wake Chat Assistant</b> : If you say "Hey", then It works using.
 
-        # Communication start
-        response = mic(2)
-        if response == "":
-            call_num += 1
-            print(call_num)
-        if call_num == 3:
-            speaking("Please call me hey!")
-            call_num = 0
-        if response == "hey":
-            speaking("yes sir!")
-            response = mic(3)
-        ```
-2. <b>Talk Something</b> : Say anything on Mic within 3 secs, The Chat Assistant understand what you said.
+
+2. <b>Talk Something</b> : After saying "Hey", Say anything on Mic within 3 secs, The Chat Assistant understand what you said.
     - Execute
    ```python
     while response != "":
-        response_ = robot.gpt_send_anw(response)
-        emotion = response_[0]
-        ans = response_[1]
+        response = robot.gpt_send_anw(response)
+        ans = response
 
         speaking(ans)
-    os.remove("sampleWav.wav")    
     ```
 3. <b>Make Answer properly</b> : It is going to make answer something using ChatGPT. And speak out using Speaker. 
 
 4. <b>Special Function</b>
-   - <b>Silent</b> : If you say "Silent", Then It doesn't speak for 1000000 secs until you speak first.
    - <b>Reset</b> : If you say "Reset", Then It remove the user's data. And ask you about new user's data.
    - <b>Turn off</b> : If you say "Turn off", Then It quit the process.
 
@@ -61,10 +44,7 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
         name_ini()
     elif response == "turn off":
         speaking("ok. turn off mode")
-        break
-    elif response == "silent":
-        speaking("ok. silent mode")
-        call_num = - 1000000
+        return False
    ```
     
  
@@ -94,7 +74,45 @@ It can be your friend. And If you want to change ChatGPT's prompt, then you can 
 
 ## Code
 
-### Recording voice.
+### Wake Word
+```python
+stream = sd.InputStream(
+        samplerate=RATE, channels=CHANNELS, dtype='int16')
+    stream.start()
+
+    owwModel = Model(
+        wakeword_models=["../models/hey.tflite"], inference_framework="tflite")
+
+    n_models = len(owwModel.models.keys())
+
+    # Main loop for wake word detection
+    while True:
+        # Get audio
+        audio_data, overflowed = stream.read(CHUNK)
+        if overflowed:
+            print("Audio buffer has overflowed")
+
+        audio_data = np.frombuffer(audio_data, dtype=np.int16)
+
+        # Feed to openWakeWord model
+        prediction = owwModel.predict(audio_data)
+        common = False
+        # Process prediction results
+        for mdl in owwModel.prediction_buffer.keys():
+            scores = list(owwModel.prediction_buffer[mdl])
+            if scores[-1] > 0.2:  # Wake word detected
+                print(f"wake word dectected {mdl}!")
+                mdl = ""
+                scores = [0] * n_models
+                audio_data = np.array([])
+                common = True
+        if common:
+            speaking("yes sir!")
+```
+
+- Reference : [dscripka/openWakeWord](https://github.com/dscripka/openWakeWord)
+
+### Recording voice
 ```python
 def mic(time):
     import requests

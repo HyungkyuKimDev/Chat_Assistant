@@ -13,44 +13,26 @@
 
 # Chat Assistant
 
-老人のための<b>A Chat Assistant</b>です。 <b>Python, Naver Clova and ChatGPT 3.5</b>を利用し作りました。
+老人のための<b>A Chat Assistant</b>です。 <b>Python, Naver Clova, Wake Word また ChatGPT 3.5</b>を利用し作りました。
 マイクで話したのをテキストで認識します。その後、答えを作りスピーカでその答えを出力します。
 これはあなたの友達になれますし、ChatGPTのPromptを変更すると。また、自分のChat　Botを作れます。
 
 ## 特徴
 
-1. <b>Chat Assistantの策動</b> : ２秒以内で"hey"と言うと、作道が始まります。
-    - 実行
-        ```python
-      robot = Robot()
+1. <b>Wake Chat Assistant</b> : あなたが”Hey＂と言うと、策動します。
 
-        # 話しの始まり
-        response = mic(2)
-        if response == "":
-            call_num += 1
-            print(call_num)
-        if call_num == 3:
-            speaking("Please call me hey!")
-            call_num = 0
-        if response == "hey":
-            speaking("yes sir!")
-            response = mic(3)
-        ```
 2. <b>答え</b> : マイクで３秒間録音すると、ChatGPTが録音をテキストで認識します。 
     - 実行
    ```python
     while response != "":
-        response_ = robot.gpt_send_anw(response)
-        emotion = response_[0]
-        ans = response_[1]
+        response = robot.gpt_send_anw(response)
+        ans = response
 
         speaking(ans)
-    os.remove("sampleWav.wav")    
     ```
 3. <b>答えの作り</b> : ChatGPTを利用し、答えを作ります。また、その答えをスピーカーで出力します。
 
 4. <b>特別な機能</b>
-   - <b>話しかけるな機能</b> : "Silent"と言うと, 10000秒間話しかける機能が策動しません。
    - <b>データの削除機能</b> : "Reset"と言うとユーザのデータを消した後、ユーザのデータを聞きます。
    - <b>終了機能</b> : "Turn off"と言うと、プロセスを終了します。
 
@@ -60,10 +42,7 @@
         name_ini()
     elif response == "turn off":
         speaking("ok. turn off mode")
-        break
-    elif response == "silent":
-        speaking("ok. silent mode")
-        call_num = - 1000000
+        return False
    ```
     
  
@@ -92,6 +71,44 @@
   ```
 
 ## Code
+
+### Wake Word
+```python
+stream = sd.InputStream(
+        samplerate=RATE, channels=CHANNELS, dtype='int16')
+    stream.start()
+
+    owwModel = Model(
+        wakeword_models=["../models/hey.tflite"], inference_framework="tflite")
+
+    n_models = len(owwModel.models.keys())
+
+    # Main　繰り返し、WakeWordの確認のため
+    while True:
+        # オーディオデータを探し
+        audio_data, overflowed = stream.read(CHUNK)
+        if overflowed:
+            print("Audio buffer has overflowed")
+
+        audio_data = np.frombuffer(audio_data, dtype=np.int16)
+
+
+        prediction = owwModel.predict(audio_data)
+        common = False
+
+        for mdl in owwModel.prediction_buffer.keys():
+            scores = list(owwModel.prediction_buffer[mdl])
+            if scores[-1] > 0.2:  # もし探すと
+                print(f"wake word dectected {mdl}!")
+                mdl = ""
+                scores = [0] * n_models
+                audio_data = np.array([])
+                common = True
+        if common:
+            speaking("yes sir!")
+```
+
+- 参考 : [dscripka/openWakeWord](https://github.com/dscripka/openWakeWord)
 
 ### 音声録音
 ```python
@@ -166,7 +183,7 @@ def speaking(anw_text):
     rescodes = response.getcode()
     if (rescodes == 200):
         response_body = response.read()
-        with open('./ResultMP3.mp3', 'wb') as f:
+        with open('./ResultMP3.mp3', 'wb') asオ f:
             f.write(response_body)
 
         # スピーカーの出力
@@ -232,8 +249,7 @@ class Robot():
 
 プロジェクトのリンク: [HyungkyuKimDev/Chat_Assistant](HyungkyuKimDev/Chat_Assistant)
 
-
-
-## Demo
-
-[![Video Label](http://img.youtube.com/vi/3WTap8t_r6o/0.jpg)](https://youtu.be/3WTap8t_r6o)
+## Thanks to
+[Topasm](https://github.com/Topasm) 
+- Wake Word Part developed 
+- Robot Engineer
