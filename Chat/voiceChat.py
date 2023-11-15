@@ -259,3 +259,18 @@ def conversation_loop():
                     break
 
             return True
+
+def file_cleanup():
+    import os
+    # File Paths
+    SAMPLE_WAV = "./sampleWav.wav"
+    RESULT_MP3 = "./ResultMP3.mp3"
+
+    def file_cleanup():
+        for file_path in [SAMPLE_WAV, RESULT_MP3]:
+            remove_file_if_exists(file_path)
+
+
+def remove_file_if_exists(file_path):
+    if os.path.exists(file_path):
+        os.remove(file_path)
