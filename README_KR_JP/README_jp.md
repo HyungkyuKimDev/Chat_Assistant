@@ -1,30 +1,30 @@
-# 언어 선택
+# 言語の選択
 <div align="center">
   <a href="https://github.com/HyungkyuKimDev/Chat_Assistant/blob/main/README.md">
-    <img src="img/america_flag.png" alt="Logo" width="80" height="80">
+    <img src="../img/america_flag.png" alt="Logo" width="80" height="80">
   </a>
     <a href="https://github.com/HyungkyuKimDev/Chat_Assistant/blob/main/README_jp.md">
-    <img src="img/japan_flag.png" alt="Logo" width="80" height="80">
+    <img src="../img/japan_flag.png" alt="Logo" width="80" height="80">
   </a>
     <a href="https://github.com/HyungkyuKimDev/Chat_Assistant/blob/main/README_kr.md">
-    <img src="img/korea_flag.png" alt="Logo" width="80" height="80">
+    <img src="../img/korea_flag.png" alt="Logo" width="80" height="80">
   </a>
 </div>
 
 # Chat Assistant
 
-노인을 위한 <b>A Chat Assistant</b>입니다. <b>Python, Naver Clova and ChatGPT 3.5</b>를 사용해 구현하였습니다. 
-마이크를 통해 말하신것을 텍스트로 인식합니다. 그런 다음 적절한 답을 만들어 스피커를 통해 출력합니다.  
-이것은 당신의 친구가 될 수 있으며, ChatGPT의 프롬포트를 변경하시면, 또 다른 본인만의 chat bot을 만들 수 있습니다. 
+老人のための<b>A Chat Assistant</b>です。 <b>Python, Naver Clova and ChatGPT 3.5</b>を利用し作りました。
+マイクで話したのをテキストで認識します。その後、答えを作りスピーカでその答えを出力します。
+これはあなたの友達になれますし、ChatGPTのPromptを変更すると。また、自分のChat　Botを作れます。
 
-## 특징
+## 特徴
 
-1. <b>Chat Assistant 작동</b> : 2초 이내에 "hey"라고 말하시면, 작동이 시작됩니다..
-    - 실행
+1. <b>Chat Assistantの策動</b> : ２秒以内で"hey"と言うと、作道が始まります。
+    - 実行
         ```python
       robot = Robot()
 
-        # 대화 시작
+        # 話しの始まり
         response = mic(2)
         if response == "":
             call_num += 1
@@ -36,8 +36,8 @@
             speaking("yes sir!")
             response = mic(3)
         ```
-2. <b>대답 하기</b> : 마이크를 통해 3초간 녹음을 하면, ChatGPT가 해당 음성을 텍스트로 인식합니다.
-    - 실행
+2. <b>答え</b> : マイクで３秒間録音すると、ChatGPTが録音をテキストで認識します。 
+    - 実行
    ```python
     while response != "":
         response_ = robot.gpt_send_anw(response)
@@ -47,12 +47,12 @@
         speaking(ans)
     os.remove("sampleWav.wav")    
     ```
-3. <b>적절한 대답 생성</b> : ChatGPT를 이용해서 답을 구현합니다. 이후, 그 답을 스피커를 통해 출력합니다. 
+3. <b>答えの作り</b> : ChatGPTを利用し、答えを作ります。また、その答えをスピーカーで出力します。
 
-4. <b>특별한 기능</b>
-   - <b>방해 금지 기능</b> : "Silent",라고 말하면, 10000초 동안 말거는 기능을 작동하지 않습니다.
-   - <b>초기화 기능</b> : "Reset"이라고 말하면, 유저 데이터를 삭제한 뒤, 유저 데이터를 다시 물어봅니다.
-   - <b>종료 기능</b> : "Turn off"라고 말하면, 프로세스를 끝냅니다.
+4. <b>特別な機能</b>
+   - <b>話しかけるな機能</b> : "Silent"と言うと, 10000秒間話しかける機能が策動しません。
+   - <b>データの削除機能</b> : "Reset"と言うとユーザのデータを消した後、ユーザのデータを聞きます。
+   - <b>終了機能</b> : "Turn off"と言うと、プロセスを終了します。
 
     ```python
     if response == "reset":
@@ -67,55 +67,55 @@
    ```
     
  
-## 저장
+## 保存
 
-- <b>이 저장소</b>를 git clone 해주세요. 
+- <b>このrepository</b>をgit cloneしてください。
   ```sh
   git clone https://github.com/HyungkyuKimDev/Chat_Assistant.git
   ```
-- 터미널로 <b>requirements.txt</b> 파일을 실행해, 필요한 패키지들을 설치해주세요.
+- Terminalで<b>requirements.txt</b>のファイルを実行し、必要なPackageを設置してください。
     ```sh
   pip install -r requirements.txt 
   ```
 
 
-## 사용법
+## 使い方
 
 
-- 디렉터리를 클론하신 곳으로 이동해주세요. 
+- 位置をCloneしたところに移動してください。
     ```sh
   cd [The dircetory where you clone]
   ```
-- <b>chatbot_voice.py</b>를 python3나 사용하시는 IDE로 실행해주세요.
+- <b>chatbot_voice.py</b>をpython3とか利用するIDEで実行してください。
    ```sh
   python3 chatbot_voice.py
   ```
 
 ## Code
 
-### 음성 녹음
+### 音声録音
 ```python
 def mic(time):
     import requests
     import sounddevice as sd
     from scipy.io.wavfile import write
 
-    # 음성 녹음
+    # 音声録音
     fs = 44100
-    seconds = time # 녹음 시간
+    seconds = time # 録音時間
     
     myRecording = sd.rec(int(seconds * fs), samplerate=fs, channels=4)  # channels는 마이크 장치 번호
     print("recording start")
-    # 마이크 장치 채널 찾는 방법 => python -m sounddevice
+    # マイクのチャネルを探し方 => python -m sounddevice
     sd.wait()
     write('sampleWav.wav', fs, myRecording)
 
-    # 음성을 텍스트로 변환 Naver Cloud : CLOVA Speech Recognition
+    # 音声をテキストで変更 Naver Cloud : CLOVA Speech Recognition
     ## Set
     lang = "Eng"
     url = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + lang
     
-    ## 음성 파일 녹음
+    ## 音声を録音
     data_voice = open('sampleWav.wav', 'rb')
 
     ## headers
@@ -149,9 +149,9 @@ def mic(time):
 
     return anw_str
 ```
-- Reference : [Naver Cloud : CLOVA Speech Recognition](https://api.ncloud-docs.com/docs/ai-naver-clovaspeechrecognition)
+- 参考 : [Naver Cloud : CLOVA Speech Recognition](https://api.ncloud-docs.com/docs/ai-naver-clovaspeechrecognition)
 <br></br>
-### 스피커 사용해 오디오 출력
+### スピーカーを利用し、オーディオデータの出力
 ```python
 def speaking(anw_text):
 
@@ -169,7 +169,7 @@ def speaking(anw_text):
         with open('./ResultMP3.mp3', 'wb') as f:
             f.write(response_body)
 
-        # 스피커 출력
+        # スピーカーの出力
         filename = "ResultMP3.mp3"
         dst = "test.wav"
         sound = AudioSegment.from_mp3(filename)
@@ -180,19 +180,20 @@ def speaking(anw_text):
     else:
         print("404 error")
 
-        # 오디오 데이터 삭제
+        # オーディオデータの削除
         os.remove("ResultMP3.mp3")
         os.remove("test.wav")
 ```
-- Reference : [NAVER CLOVA : CLOVA Voice](https://api.ncloud-docs.com/docs/ai-naver-clovavoice-ttspremium)
+- 参考 : [NAVER CLOVA : CLOVA Voice](https://api.ncloud-docs.com/docs/ai-naver-clovavoice-ttspremium)
 
 <br></br>
-### OpenAI 이용해, 대답 구하기
+### OpenAIを利用し,答えを作り
+
 ```python
 class Robot():
     memory_size = 100
 
-    with open('./user_value.json', 'r') as f:
+    with open('../user_value.json', 'r') as f:
         data = json.load(f)
         nameValue = data["user_name"]
         manWomanValue = data["user_value"]
@@ -202,11 +203,11 @@ class Robot():
 
     def gpt_send_anw(self, question: str):
         self.gpt_standard_messages = [{"role": "assistant",
-                                   "content": f"You're a assistant robot for senior in USA. Your name is robot. "
-                                              f"Your being purpose is support.  So Please answer politely in english and under 5 seconds. "
-                                              f"please be a good friend to your patient. "
-                                              f"Your patient's name is {self.nameValue} and {self.manWomanValue} is an old person."},
-                                      {"role": "user", "content" : question}]
+                                       "content": f"You're a assistant robot for senior in USA. Your name is robot. "
+                                                  f"Your being purpose is support.  So Please answer politely in english and under 5 seconds. "
+                                                  f"please be a good friend to your patient. "
+                                                  f"Your patient's name is {self.nameValue} and {self.manWomanValue} is an old person."},
+                                      {"role": "user", "content": question}]
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -222,17 +223,17 @@ class Robot():
         return answer
 ```
 
-## 연락처
+## 連絡先
 
-김형규
+キム・ヒョンギュ
 - hyungkyukimdev@gmail.com
 - [Linkedein](https://www.linkedin.com/in/hyung-gyu-kim-202b991b8/)
 - [Blog](https://honoluulu-life.tistory.com/)
 
-프로젝트 링크: [HyungkyuKimDev/Chat_Assistant](HyungkyuKimDev/Chat_Assistant)
+プロジェクトのリンク: [HyungkyuKimDev/Chat_Assistant](HyungkyuKimDev/Chat_Assistant)
 
 
 
-## 데모
+## Demo
 
 [![Video Label](http://img.youtube.com/vi/3WTap8t_r6o/0.jpg)](https://youtu.be/3WTap8t_r6o)

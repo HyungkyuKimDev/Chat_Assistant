@@ -3,10 +3,10 @@
     <a href="https://github.com/HyungkyuKimDev/Chat_Assistant/blob/main/README.md">
         <img src="img/america_flag.png" alt="Logo" width="80" height="80">
     </a>
-        <a href="https://github.com/HyungkyuKimDev/Chat_Assistant/blob/main/README_jp.md">
+        <a href="https://github.com/HyungkyuKimDev/Chat_Assistant/blob/main/README_KR_JP/README_jp.md">
         <img src="img/japan_flag.png" alt="Logo" width="80" height="80">
     </a>
-        <a href="https://github.com/HyungkyuKimDev/Chat_Assistant/blob/main/README_kr.md">
+        <a href="https://github.com/HyungkyuKimDev/Chat_Assistant/blob/main/README_KR_JP/README_kr.md">
         <img src="img/korea_flag.png" alt="Logo" width="80" height="80">
     </a>
 </div>
