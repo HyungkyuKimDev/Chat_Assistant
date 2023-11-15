@@ -246,7 +246,7 @@ def conversation_loop():
                     name_ini()
                 elif response == "turn off":
                     speaking("ok. turn off mode")
-                    break
+                    return False
                 elif response == "silent":
                     speaking("ok. silent mode")
                     call_num = - 1000000
