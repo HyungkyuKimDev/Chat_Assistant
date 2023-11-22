@@ -23,7 +23,7 @@
 
 2. <b>대답 하기</b> : 마이크를 통해 3초간 녹음을 하면, ChatGPT가 해당 음성을 텍스트로 인식합니다.
     - 실행
-   ``python
+   ```python
     while response != "":
         response = robot.gpt_send_anw(response)
         ans = response
